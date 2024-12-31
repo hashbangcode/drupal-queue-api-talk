@@ -309,10 +309,11 @@ Some live demos!
 # Modules That Use Queue
 
 ---
+
 <!-- _footer: "" -->
 ## Queue UI
 
-- View current queues, inspect their contents, and process them with a batch.
+<small>- View and run queues, also inspect their contents.</small>
 
 <small>https://www.drupal.org/project/queue_ui</small>
 
