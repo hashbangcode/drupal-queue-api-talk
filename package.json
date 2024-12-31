@@ -1,0 +1,28 @@
+{
+  "name": "talk-template",
+  "version": "1.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:all": "npm run build:html && npm run build:pdf && npm run build:pp",
+    "build:html": "marp",
+    "build:pdf": "marp --pdf",
+    "build:pp": "marp --pptx",
+    "clean": "rm -fr dist/*.{html,pdf,pptx}",
+    "preview": "marp --preview",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch:html": "marp --watch"
+  },
+  "author": "#! code",
+  "license": "Apache2",
+  "marp": {
+    "allowLocalFiles": true,
+    "html": true,
+    "inputDir": "src",
+    "output": "dist",
+    "engine": "./engine.js"
+  },
+  "devDependencies": {
+    "@marp-team/marp-cli": "^3.4.0"
+  }
+}
