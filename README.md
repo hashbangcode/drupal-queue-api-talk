@@ -1,49 +1,14 @@
-# marp-talk-template
-A talk template that uses Marp CLI
+# Drupal Queue API
+A talk about the Drupal Queue API.
 
-## Install
+## Slides
 
-1 Clone the repo 
-```bash
-$ git clone git@github.com:pfwd/talk-template.git
-`````
+You can view the slides in a number of ways:
 
-2 Install dependencies
+- HTML (download this repo open the file `dist/slides.html`)
+- [PDF](https://github.com/hashbangcode/drupal-queue-api-talk/blob/main/dist/slides.pdf)
+- [PPTX](https://github.com/hashbangcode/drupal-queue-api-talk/blob/main/dist/slides.pptx)
 
-```bash
-$ npm install
-```
-Update `src/slides.md` with content.  
-Add images to `src/assets/images/`.
+## Resources
 
-## Build slide deck
-
-Use `npm run` to see all available commands.
-
-### Build HTML from slides
-
-```bash
-$ npm run build:html
-```
-
-### Watch HTML from slides
-
-```bash
-$ npm run watch:html
-```
-
-### Build PDF from slides
-
-```bash
-$ npm run build:pdf
-```
-
-### Build PPT from slides
-
-```bash
-$ npm run build:pp
-```
-
-## Thanks
-
-Many thanks to [Peter Fisher](https://twitter.com/pfwd) for the inital [Marp talk template](https://github.com/pfwd/talk-template).
+- [Drupal 11: The Queues API ](https://www.hashbangcode.com/article/drupal-11-queues-api)
