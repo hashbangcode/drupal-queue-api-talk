@@ -310,7 +310,7 @@ Some live demos!
 
 ---
 <!-- _footer: "" -->
-## Simple XML sitemap
+## Queue UI
 
 - View current queues, inspect their contents, and process them with a batch.
 
@@ -326,6 +326,15 @@ Some live demos!
 - Warms the cache for content entities. Runs this process via a queue.
 
 <small>https://www.drupal.org/project/warmer</small>
+
+---
+
+<!-- _footer: "" -->
+## Queue Unique
+
+- Creates a custom queue storage handler to store all items in the queue as unique.
+
+<small>https://www.drupal.org/project/queue_unique</small>
 
 ---
 
