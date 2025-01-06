@@ -63,23 +63,47 @@ Finally, we'll look at how Drupal uses the Queue API internally and some use cas
 -->
 ---
 
+## What Is A Queue?
+
+A queue is a "first in, first out" (or FIFO) data model where items are placed into a list and processed in order.
+
+The first item added is processed first, just like a normal queue.
+
+This  is a common structure in programming when processing data.
+
+---
+
 ## What Is The Queue API?
 
-Allows tasks to be processed in asynchronously in order to prevent timeout errors or memory problems.
+The Queue API creates a queue data structure and allows tasks to be processed in asynchronously. This normally in order to prevent timeout errors or memory problems.
+
+---
+
+## The Queue API
+- The API is highly extensible. By default we have a database queue and a memory queue interfaces.
+- When creating a queue it is common for the database queue to be used.
+- The cron system automatically picks up database queue items and processes them.
 
 ---
 
 ## The Queue API
 
 - The Queue API in Drupal has no user interface as everything happens behind the scenes.
-- The Batch API is built upon the Queue API and uses both the database and memory queues.
+- The Batch API is built upon the Queue API and uses both the database and memory queues. The Batch API has an interface that is shown to users when processing tasks.
 
 ---
 
 ## The Queue API
-- The API is highly extensible. By default we have a database queue and a memory queue interfaces.
-- When creating a queue it is common for the database queue to be used. The cron system automatically picks up queue items and processes them.
 
+The API consists of three parts:
+
+- A storage interface for the queue.
+- The queue worker that will process a single item in the queue.
+- A processing step that picks items out the queue and processes it using the worker.
+
+<!-- 
+There are some internal queues that you can use, but you will normally want to create your own queues for processing data.
+-->
 ---
 
 # When To Use A Queue
@@ -96,15 +120,9 @@ For example, let's say you wanted to delete all taxonomy items on a site.
 
 Instead of doing this in one go you would add all of the taxonomy IDs to a queue and process them one by one.
 
----
-
-## The Queue API
-
-The API consists of three parts:
-
-- A storage interface for the queue.
-- The queue worker that will process a single item in the queue.
-- A processing step that picks items out the queue and processes it using the worker.
+<!-- 
+We'll come onto more examples later, but for now assume that it is possible to throw data into a queue for later processing.
+-->
 
 ---
 
@@ -175,6 +193,15 @@ $queue->createItem($item);
 
 ```
 
+<!--
+The table columns are:
+- item_id = An auto increment field.
+- name = The name of the queue we created.
+- data = The serialised data in our queue.
+- expire = When the queue item is picked up for processing the expire time is set to 1 hour in the future. The item can get placed back into the queue, but will be picked back up if the expire time is in the past.
+- created = When the queue item was created.
+-->
+
 ---
 
 ## Create A Queue
@@ -195,9 +222,13 @@ A queue worker is required to process the tasks in the queue.
 
 ## Create A Queue Worker
 
-- A queue worker is a plugin that accepts single items in the queue.
+- A queue worker is a plugin that accepts single items from the queue.
 - When Drupal is processing the queue it will pass each item to the processor.
-- If everything is processed correctly then 
+- If everything is processed correctly then the item will be deleted from the queue.
+
+<!-- 
+The assumption is that if you didn't throw an error then the item should be removed.
+-->
 
 ---
 <!-- _footer: "" -->
@@ -233,9 +264,13 @@ public function processItem($data) {
 <!-- _footer: "" -->
 ## Throwing Exceptions During Processing
 
-We can effect the queue in different ways by throwing different exceptions.
+We can effect the queue in different ways by throwing different exceptions. Drupal accepts 4.
 - `\Drupal\Core\Queue\DelayedRequeueException` - For database queues, the item is added back to the queue and held back for an hour.
 - `\Drupal\Core\Queue\RequeueException` - The item is added back into the queue and will be picked up later in the processing.
+
+<!--
+Remember the queue structure. If we throw an item into the queue we put it back to the processing list.
+-->
 
 ---
 ## Throwing Exceptions During Processing
@@ -247,6 +282,10 @@ We can effect the queue in different ways by throwing different exceptions.
 
 # Processing A Queue
 
+---
+
+## Processing A Queue
+
 The eaiest way to process a queue is to run cron.
     
 - Via the cron processor form at "/admin/config/system/cron".
@@ -257,7 +296,7 @@ The eaiest way to process a queue is to run cron.
 ## Processing A Queue
 
 - It is possible to process queues outside of cron.
-- Use the queue factory to load the queue and the queue worker plugin to process the item.
+- Use the `queue` factory to load the queue and the queue worker plugin to process the item.
 
 ```php
 $queue = \Drupal::service('queue')->get('queue_simple_example');
@@ -298,9 +337,16 @@ Some live demos!
 <!-- _footer: "" -->
 
 ## Top Tips
+
 - Keep an eye on the numbers in your queue.
-- Think about the amount of time that it would take to process your queue.
-- Don't store too much in your queue items, just enough to provide context.
+- Think about the amount of time that it would take to process your queue. Is the cron handler running often enough to process the data?
+- For large queues, consider storing a (small) array of items in the data. This helps with the speed of processing.
+- Don't store too much data in your queue items, just enough to provide context.
+
+--- 
+
+## Top Tips
+
 - There is no interface for queues so be sure to handle errors properly.
 - If your users need to process something straight away then use a batch.
 
@@ -325,6 +371,7 @@ Some live demos!
 ## Warmer
 
 - Warms the cache for content entities. Runs this process via a queue.
+- The sitemap.xml processing is a good example of storing an array in the queue item.
 
 <small>https://www.drupal.org/project/warmer</small>
 
