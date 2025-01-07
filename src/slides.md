@@ -75,12 +75,12 @@ This  is a common structure in programming when processing data.
 
 ## What Is The Queue API?
 
-The Queue API creates a queue data structure and allows tasks to be processed in asynchronously. This normally in order to prevent timeout errors or memory problems.
+The Queue API creates a queue data structure and allows tasks to be processed asynchronously. This is normally in order to prevent timeout errors or memory problems.
 
 ---
 
 ## The Queue API
-- The API is highly extensible. By default we have a database queue and a memory queue interfaces.
+- The API is highly extensible. By default we have a database queue and a memory queue interface.
 - When creating a queue it is common for the database queue to be used.
 - The cron system automatically picks up database queue items and processes them.
 
@@ -286,7 +286,7 @@ Remember the queue structure. If we throw an item into the queue we put it back 
 
 ## Processing A Queue
 
-The eaiest way to process a queue is to run cron.
+The easiest way to process a queue is to run cron.
     
 - Via the cron processor form at "/admin/config/system/cron".
 - Via the "Run cron" link on the status page.
