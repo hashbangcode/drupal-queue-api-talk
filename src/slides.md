@@ -347,7 +347,7 @@ Some live demos!
 
 ## Top Tips
 
-- There is no interface for queues so be sure to handle errors properly.
+- There is no interface for queues so be sure to handle errors properly. Logging is important when things go wrong.
 - If your users need to process something straight away then use a batch.
 
 ---
@@ -371,7 +371,7 @@ Some live demos!
 ## Warmer
 
 - Warms the cache for content entities. Runs this process via a queue.
-- The sitemap.xml processing is a good example of storing an array in the queue item.
+- The sitemap.xml processing is a good example of storing an array in the queue data.
 
 <small>https://www.drupal.org/project/warmer</small>
 
